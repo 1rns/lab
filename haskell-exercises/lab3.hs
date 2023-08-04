@@ -59,11 +59,11 @@ len []    = 0
 len (_:t) = 1 + len t
 
 -- 3.4.2
-mean :: Real a => [a] -> Fractional b => b
+mean :: (Real a, Fractional b) => [a] -> b
 mean ls = realToFrac (sum ls) / fromIntegral (len ls)
 
 -- 3.4.3
-var :: Real a => [a] -> Fractional b => b
+var :: (Real a, Fractional b) => [a] -> b
 var ls =
   let avg = mean ls
   in (sum [(realToFrac x - avg)^2 | x <- ls])
@@ -71,5 +71,5 @@ var ls =
      fromIntegral (len ls)
 
 -- 3.4.4
-stdev :: Real a => [a] -> Floating b => b
+stdev :: (Real a, Floating b) => [a] -> b
 stdev ls = sqrt (var ls)
