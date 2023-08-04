@@ -32,17 +32,17 @@ sumFormula n = (n * (n + 1)) / 2 -- use `div` instead of `/`
 
 -- ——2.3——
 lengthList :: [Int] -> Int -- ✔
-lengthList [] = 0
+lengthList []         = 0
 lengthList (_ : tail) = 1 + lengthList tail
 
 sumList :: [Int] -> Int -- ✔
-sumList [] = 0
+sumList []      = 0
 sumList (0 : t) = sumList t
 sumList (h : t) = h + sumList t
 
 maxList :: [Int] -> Int -- ✔
-maxList [] = error "cannot have an empty list"
-maxList [h] = h -- if only one element
+maxList []      = error "cannot have an empty list"
+maxList [h]     = h -- if only one element
 maxList (h : t) = max h (maxList t)
 
 -- ——2.4——
