@@ -15,6 +15,11 @@ addDaysToDate (day, month, year) offset
             daysOfYearToDate finalDays finalYr
 
 normaliseDate :: Int -> Int -> (Int, Int)
+-- | wrong
+-- adjustDate (7, 9, 2025) (-500) --      (25,4,2024)
+-- (24,4,2024)
+-- ghci> adjustDate (31, 12, 2023) (-365) --      (31,12,2022)
+-- (31,12,2023)
 normaliseDate totDays prevYr
     | totDays <= 365 && totDays >= 1 = (totDays, prevYr)
     | totDays == 366 && isLeapYear prevYr = (totDays, prevYr)
