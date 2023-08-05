@@ -15,30 +15,26 @@ addDaysToDate (day, month, year) offset
             daysOfYearToDate finalDays finalYr
 
 normaliseDate :: Int -> Int -> (Int, Int)
--- | wrong
--- adjustDate (7, 9, 2025) (-500) --      (25,4,2024)
--- (24,4,2024)
--- ghci> adjustDate (31, 12, 2023) (-365) --      (31,12,2022)
--- (31,12,2023)
 normaliseDate totDays prevYr
     | totDays <= 365 && totDays >= 1 = (totDays, prevYr)
     | totDays == 366 && isLeapYear prevYr = (totDays, prevYr)
-    | totDays == 0 = (if isLeapYear $ prevYr - 1 then 366 else 365, prevYr)
+    | totDays == 0 = (if isLeapYear $ prevYr - 1 then 366 else 365, prevYr - 1)
     | otherwise =
         let
             finalYr = prevYr +
                 if totDays < 0
                 then ceiling (fromIntegral totDays / 365) - 1
                 else floor (fromIntegral totDays / 365)
-            finalDays = (totDays `mod` 365) - numLeapsBetween prevYr finalYr
+            finalDays = (totDays `mod` 365) + numLeapsBetween prevYr finalYr
         in
             if finalDays < 1
             then normaliseDate finalDays finalYr
             else (finalDays, finalYr)
 
-
 numLeapsBetween :: Int -> Int -> Int
-numLeapsBetween yr1 yr2 = sum [1 | y <- [yr1 .. yr2], isLeapYear y]
+numLeapsBetween yr1 yr2
+    | yr1 > yr2 = sum [1 | y <- [yr2..yr1-1], isLeapYear y]
+    | otherwise = -sum [1 | y <- [yr1..yr2-1], isLeapYear y]
 
 -- #TODO
 isDateValid :: (Int, Int, Int) -> Bool
