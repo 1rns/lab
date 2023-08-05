@@ -18,8 +18,7 @@ normaliseDate :: Int -> Int -> (Int, Int)
 normaliseDate totDays prevYr
     | totDays <= 365 && totDays >= 1 = (totDays, prevYr)
     | totDays == 366 && isLeapYear prevYr = (totDays, prevYr)
-    | totDays == 0 =
-        (if isLeapYear $ prevYr - 1 then 366 else 365, prevYr)
+    | totDays == 0 = (if isLeapYear $ prevYr - 1 then 366 else 365, prevYr)
     | otherwise =
         let
             finalYr = prevYr +
@@ -69,8 +68,10 @@ getCumulativeDaysOfMonth month yr =
 
 cumulativeMonths :: Int -> [Int]
 cumulativeMonths year
-    | isLeapYear year = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
-    | otherwise       = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365]
+    | isLeapYear year =
+        [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
+    | otherwise =
+        [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365]
 
 getFirstGeqIndex :: Int -> [Int] -> Int
 getFirstGeqIndex _ [] = -1
