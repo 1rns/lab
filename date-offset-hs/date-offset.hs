@@ -1,6 +1,6 @@
 adjustDate :: (Int, Int, Int) -> Int -> (Int, Int, Int)
 adjustDate (day, month, year) offset =
-    if isDateValid (day, month, year)
+    if isValidDate (day, month, year)
     then addDaysToDate (day, month, year) offset
     else error ""
 
@@ -36,9 +36,13 @@ numLeapsBetween yr1 yr2
     | yr1 > yr2 = sum [1 | y <- [yr2..yr1-1], isLeapYear y]
     | otherwise = -sum [1 | y <- [yr1..yr2-1], isLeapYear y]
 
--- #TODO
-isDateValid :: (Int, Int, Int) -> Bool
-isDateValid (date, month, year) = True
+isValidDate :: (Int, Int, Int) -> Bool
+isValidDate (day, month, year)
+    | year < 1600 || year > 3000 = error "year out of interval: [1600, 3000]"
+    | month < 1 || month > 12 = error "month out of interval: [1, 12]"
+    | day < 1 || day > daysInMonth month year =
+        error ("day does not belong to specified month: " ++ show month)
+    | otherwise = True
 
 daysOfYearToDate :: Int -> Int -> (Int, Int, Int)
 daysOfYearToDate totalDays yr =
@@ -82,10 +86,10 @@ getFirstGeqIndex num (h : t)
     | otherwise = 1 + current
       where current = getFirstGeqIndex num t
 
--- ———— Unused ———— --
-daysInMonth :: Int -> Bool -> Int
-daysInMonth 1 True = 29
-daysInMonth 1 False = 28
+daysInMonth :: Int -> Int -> Int
+daysInMonth 1 year
+    | isLeapYear year = 29
+    | otherwise = 28
 daysInMonth m _ =
     if m == 4 || m == 6 || m == 9 || m == 11
     then 30
