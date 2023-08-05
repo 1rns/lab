@@ -17,33 +17,24 @@ addDaysToDate (day, month, year) offset
 normaliseDate :: Int -> Int -> (Int, Int)
 normaliseDate totDays prevYr
     | totDays <= 365 && totDays >= 1 = (totDays, prevYr)
-    | totDays == 366 && isLeapYear prevYr = (totDays,prevYr)
+    | totDays == 366 && isLeapYear prevYr = (totDays, prevYr)
     | totDays == 0 =
-        (if isLeapYear (prevYr - 1) then 366 else 365, prevYr - 1)
+        (if isLeapYear $ prevYr - 1 then 366 else 365, prevYr)
     | otherwise =
         let
             finalYr = prevYr +
                 if totDays < 0
                 then ceiling (fromIntegral totDays / 365) - 1
                 else floor (fromIntegral totDays / 365)
-            finalDays = (totDays `mod` 365) -
-                countLeapsBetween prevYr finalYr
+            finalDays = (totDays `mod` 365) - numLeapsBetween prevYr finalYr
         in
-            if totDays < 1
-            then normaliseDate totDays finalYr
+            if finalDays < 1
+            then normaliseDate finalDays finalYr
             else (finalDays, finalYr)
 
--- | totDays < 0 =
---     let
---         finalYr = prevYr +
---         finalDays = (totDays `mod` 365) + countLeapsInInterval prevYr finalYr
---     in
---         if finalDays == 0
---         then normaliseDate finalDays (finalYr + 1)
---         else (finalDays, finalYr)
 
-countLeapsBetween :: Int -> Int -> Int
-countLeapsBetween yr1 yr2 = sum [1 | y <- [yr1 .. yr2], isLeapYear y]
+numLeapsBetween :: Int -> Int -> Int
+numLeapsBetween yr1 yr2 = sum [1 | y <- [yr1 .. yr2], isLeapYear y]
 
 -- #TODO
 isDateValid :: (Int, Int, Int) -> Bool
