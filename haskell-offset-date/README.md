@@ -4,7 +4,7 @@ Offsets date by the specified amount.
 
 | **Language** | **files** | **blank** | **comment** | **code** |
 | -------- | ----- | ----- | ------- | ---- |
-| Haskell | 1 | 29 | 111 | 99 |
+| Haskell | 1 | 30 | 82 | 98 |
 
 #### Usage
 
