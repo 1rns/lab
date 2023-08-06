@@ -20,7 +20,7 @@
 -}
 adjustDate :: (Int, Int, Int) -> Int -> (Int, Int, Int)
 adjustDate (day, month, year) offset =
-    let isStrict = True -- see `isValidDate`
+    let isStrict = False -- see `isValidDate`
     in if isValidDate (day, month, year) isStrict &&
           isValidOffset offset isStrict
     then addDaysToDate (day, month, year) offset
@@ -38,7 +38,7 @@ addDaysToDate :: (Int, Int, Int) -> Int -> (Int, Int, Int)
 addDaysToDate date 0 = date
 addDaysToDate (day, month, year) offset =
     let
-        totalDays = dateToDaysOfYear (day, month, year) + offset
+        totalDays = dateToDayOfYear (day, month, year) + offset
         (finalDays, finalYr) = normaliseDayOfYear totalDays year
     in
         if finalYr < 1 -- only occurs when isStrict = False
@@ -164,8 +164,8 @@ getFirstGeqIndex num (h : t)
     > (30,12,2024)
       365
 -}
-dateToDaysOfYear :: (Int, Int, Int) -> Int
-dateToDaysOfYear (d, m, y) = d + getNumDaysBeforeMonth m y
+dateToDayOfYear :: (Int, Int, Int) -> Int
+dateToDayOfYear (d, m, y) = d + getNumDaysBeforeMonth m y
 
 {-
     Returns True if the argument passed is a leap year.
@@ -190,6 +190,7 @@ valueAt :: Ord a => Int -> [a] -> a
 valueAt 0 [] = error "index out of list bounds"
 valueAt index (h:t)
     | index > 0 && null t = error "index out of list bounds"
+    | index < 0 = error "cannot have negative index"
     | index == 0 = h
     | otherwise = valueAt (index - 1) t
 
@@ -210,14 +211,14 @@ getNumDaysBeforeMonth month yr =
 
     Example:
     > cumulativeMonths 2000
-    [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]
+    [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
 -}
 cumulativeMonths :: Int -> [Int]
 cumulativeMonths year
     | isLeapYear year =
-        [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]
+        [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]
     | otherwise =
-        [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+        [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365]
 
 {-
     Given a month and a year, determines the number of days
