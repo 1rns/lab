@@ -5,6 +5,9 @@
     3.    Normalise the day in case it goes out of bounds
           of the current year.
     4.    Convert the new day into original date format.
+
+    Flag `isStrict` restricts inputs, e.g. offset to be between
+    -25 and 25. Setting it to false allows any num as offset.
 -}
 
 
@@ -99,13 +102,16 @@ numLeapsCrossed yr1 yr2
 -}
 isValidDate :: (Int, Int, Int) -> Bool -> Bool
 isValidDate (day, month, year) isStrict
-    | year <= 0 = error "year cannot be less than 1"
-    | month < 1 || month > 12 = error "month cannot be out of interval: [1, 12]"
+    | year <= 0 =
+        error "year cannot be less than 1"
+    | month < 1 || month > 12 =
+        error "month cannot be out of interval: [1, 12]"
     | day < 1 || day > daysInMonth month year =
-        error ("day does not belong to specified month: " ++ show month)
-    | (year < 1600 || year > 3000) &&
-      isStrict = error "year cannot be out of interval: [1600, 3000]"
-    | otherwise = True
+        error ("day `" ++ show day ++ "` outside range of specified month `")
+    | (year < 1600 || year > 3000) && isStrict =
+        error "year cannot be out of interval: [1600, 3000]"
+    | otherwise =
+        True
 
 {-
     Flag `isStrict` restricts offset between -25 and 25 (inclusive).
@@ -159,7 +165,7 @@ getFirstGeqIndex num (h : t)
       where current = getFirstGeqIndex num t
 
 daysInMonth :: Int -> Int -> Int
-daysInMonth 1 year
+daysInMonth 2 year
     | isLeapYear year = 29
     | otherwise = 28
 daysInMonth m _ =
