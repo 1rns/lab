@@ -1,3 +1,19 @@
+## Offset Date
+
+Offsets date by the specified amount.
+
+| **Language** | **files** | **blank** | **comment** | **code** |
+| -------- | ----- | ----- | ------- | ---- |
+| Haskell | 1 | 29 | 111 | 99 |
+
+#### Usage
+
+1. Install ghci.
+2. In the interpreter, run `:load offset-date.hs`.
+3. Run `adjustDate (<dd>,<mm>,<yyyy>) (<offset>)` with the desired arguments.
+
+To allow offsetting the date more than 25 days, set `isStrict = False` flag in the source code under the `adjustDate` function.
+
 #### Examples
 
 `isStrict = True`
@@ -20,9 +36,9 @@ adjustDate (1, 1, 2500) (0)
 adjustDate (15, 7, 1750) (-10)
 -- (5,7,1750)
 adjustDate (15, 2, 2025) (25)
--- (26,5,2025)
-adjustDate (20, 11, 2026) (-25)
--- (4,5,2026)
+-- (12,3,2025)
+adjustDate (26, 10, 2026) (-25)
+-- (1,10,2026)
 ```
 
 `-- isStrict = False --`

@@ -20,7 +20,7 @@
 -}
 adjustDate :: (Int, Int, Int) -> Int -> (Int, Int, Int)
 adjustDate (day, month, year) offset =
-    let isStrict = False -- see `isValidDate`
+    let isStrict = True -- see `isValidDate`
     in if isValidDate (day, month, year) isStrict &&
           isValidOffset offset isStrict
     then addDaysToDate (day, month, year) offset
