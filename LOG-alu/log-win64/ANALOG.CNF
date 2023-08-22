@@ -1,0 +1,14 @@
+{ For AnaLOG users }
+
+include genlog.cnf     { General-purpose stuff }
+
+get     time to from pfet5 stairs vdiff idiff vswitch
+get     iswitch1 iswitch2 capfloat resfloat moscap
+get     vdd gnd opamp wramp hwr fwr hres ganglion
+get     mmeter nfet5 numbers iscope npn1 pnp1 diode1
+get     ginst* pwl 
+
+menu    vdd gnd pfet5 nfet5 mmeter vdiff opamp
+
+{ macro  r  reset }     { Now on shift-R always }
+

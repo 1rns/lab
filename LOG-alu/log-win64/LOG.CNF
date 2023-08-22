@@ -1,0 +1,18 @@
+
+{ Configuration file for LOG }
+
+
+include diglog.cnf
+
+gates   log.gat
+gates   ana.gat
+gates   actel.gat
+gates   cpu.gat
+
+macro k !
+
+menu   switch led and or nand nor inv
+
+color labeltext white
+lplot: color dashbox blue
+lplot: color labeltext black
