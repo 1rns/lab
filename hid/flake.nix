@@ -1,5 +1,5 @@
 {
-  description = "Development environment for C++";
+  description = "Development environment for Haskell";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -18,17 +18,15 @@
 
     perSystem = { pkgs, system, ... }: {
       devShells.default = pkgs.mkShell {
-        name = "C++ shell environment";
+        name = "Haskell shell environment";
 
-        shellHook = "echo 'Entering a C++ shell environment...'";
+        shellHook = "echo 'Entering a Haskell shell environment...'";
 
         packages = with pkgs; [
-          boost
-          gcc
-          cmake
-          ccls
+          cabal-install
+          ghc
+          haskell-language-server
         ];
-
       };
     };
   };
