@@ -1,2 +1,4 @@
 .direnv
 .direnv/
+.git
+nixos.qcow2
