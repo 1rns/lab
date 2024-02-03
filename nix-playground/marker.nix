@@ -82,6 +82,25 @@ in
   };
 
   config = {
+    users = {
+      lrns = {
+        departure = {
+          location = "Wellington, New Zealand";
+        };
+        arrival = {
+          location = "Dunedin, New Zealand";
+        };
+      };
+      Quartz = {
+        departure = {
+          location = "Dunedin, New Zealand";
+        };
+        arrival = {
+          location = "Talille, Estonia";
+        };
+      };
+    };
+
     map.markers = lib.filter
       (marker: marker.location != null)
       (lib.concatMap

@@ -58,10 +58,6 @@ in
     };
   };
   config = {
-    users = {
-      L = { };
-    };
-
     map.paths = builtins.map
       (
         user: {
@@ -69,7 +65,7 @@ in
             user.departure.location
             user.arrival.location
           ];
-          style = user.pathStyleType;
+          style = user.pathStyle;
         }
       )
       (lib.filter
