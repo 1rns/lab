@@ -96,7 +96,7 @@ in
       null;
 
     map.zoom = lib.mkIf
-      (lib.lenth config.map.markers >= 2)
+      (lib.length config.map.markers >= 2)
       null;
 
     requestParams =

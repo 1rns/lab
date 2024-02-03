@@ -45,12 +45,12 @@
       (lib.mkIf (config.map.zoom != null)
         "zoom=${toString config.map.zoom}")
       (lib.mkIf (config.map.center != null)
-        "center=\"$((${config.scripts.geocode}/bin/geocode ${
+        "center=\"$(${config.scripts.geocode}/bin/geocode ${
           lib.escapeShellArg config.map.center
-        }))\"")
+        })\"")
     ];
 
-    scripts.geocode = pkgs.writeShellapplication
+    scripts.geocode = pkgs.writeShellApplication
       {
         name = "geocode";
         runtimeInputs = [ pkgs.jq pkgs.curl ];
